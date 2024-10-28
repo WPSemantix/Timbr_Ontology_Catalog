@@ -3,8 +3,7 @@
 
 # Timbr Ontology Catalogs
 
-This repository contains a collection of ontology catalogs in SQL and tutorials to be used with the Timbr Intelligent Semantic Layer.
-These catalogs provide structured knowledge representations for various domains and industries.
+This repository provides a collection of SQL-based ontologies (intelligent semantic models) along with descriptions and applications. These ontologies serve as customizable templates, designed to help Timbr Intelligent Semantic Layer users jump-start their modeling process tailored to specific business domains.
 
 ## Available Ontology Catalogs
 
@@ -41,12 +40,12 @@ These catalogs provide structured knowledge representations for various domains 
 
 ## Usage
 
-Each directory contains SQL scripts and related files for the respective ontology catalog.
-To use these catalogs with the Timbr Intelligent Semantic Layer, follow the instructions provided in the individual catalog directories.
+Each directory contains SQL scripts and related files for the respective ontology.
+To use these ontologies with the Timbr Intelligent Semantic Layer, follow the instructions provided in the individual directories.
 
 ## Contributing
 
-We welcome contributions to improve existing catalogs or add new ones.
+We welcome contributions to improve existing ontologies or add new ones. 
 Please submit a pull request with your changes or additions.
 
 ## Contact
