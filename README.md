@@ -1,11 +1,11 @@
 
 ![Timbr logo](https://timbr.ai/wp-content/uploads/2023/06/timbr-ai-l-5-226x60-1.png)
 
-# Timbr Ontology Catalogs
+# Timbr Ontology Catalog
 
 This repository provides a collection of SQL-based ontologies (intelligent semantic models) along with descriptions and applications. These ontologies serve as customizable templates, designed to help Timbr Intelligent Semantic Layer users jump-start their modeling process tailored to specific business domains.
 
-## Available Ontology Catalogs
+## Available Ontology Catalog
 
 - [Asset Management Model](./asset_management_model)
 - [Automotive Model](./automotive_model)
