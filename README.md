@@ -1,5 +1,5 @@
 
-![Timbr logo](https://timbr.ai/wp-content/uploads/2023/06/timbr-ai-l-5-226x60-1.png)
+![Timbr logo](https://timbr.ai/wp-content/uploads/2025/09/timbr-for-black-background.png)) 
 
 # Timbr Ontology Catalog
 
