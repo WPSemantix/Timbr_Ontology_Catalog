@@ -14,7 +14,7 @@ The Telecommunications Model represents the key elements and relationships withi
 
 ![Attached Image of Model](./model.png)
 
-The model in Timbr’s Ontology Explorer, which provides a graphical interface to easily view and manage the concepts, properties, and relationships of the business model.
+The model in Timbr’s Ontology Explorer provides a graphical interface to easily view and manage the concepts, properties, and relationships of the business model.
 
 ## SQL Setup
 To implement the Telecommunications Model in Timbr, simply run the SQL script found in the 
