@@ -15,7 +15,7 @@ The Supply Chain Model represents the key elements and relationships across orde
 
 ## Supply Chain Diagram
 
-![Attached Image of Model](path/to/image.png)
+![Attached Image of Model](./model.png)
 
 The model in Timbr’s Ontology Explorer, which provides a graphical interface to easily view and manage the concepts, properties, and relationships of the business model.
 
