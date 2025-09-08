@@ -20,7 +20,7 @@ The Supply Chain Model represents the key elements and relationships across orde
 The model in Timbr’s Ontology Explorer, which provides a graphical interface to easily view and manage the concepts, properties, and relationships of the business model.
 
 ## SQL Setup
-To implement the Supply Chain Model in Timbr, simply run the SQL script found in the [SQL Folder](./sql). This script will create the necessary entities, relationships, measures, mappings, cubes, and views within your knowledge graph.
+To implement the Supply Chain Model in Timbr, simply run the SQL script found in the [SQL Folder](./sql/supply_chain_model.sql). This script will create the necessary entities, relationships, measures, mappings, cubes, and views within your knowledge graph.
 
 ## Implementation Guide
-For step-by-step instructions on setting up this model in Timbr, refer to the tutorial located in the [Tutorial Folder](./tutorial). It will guide you through the process of accessing Timbr, creating a new knowledge graph, and running the SQL script in the SQL editor.
+For step-by-step instructions on setting up this model in Timbr, refer to the tutorial located in the [Tutorial Folder](./tutorial/how_to_setup_supply_chain_model.md). It will guide you through the process of accessing Timbr, creating a new knowledge graph, and running the SQL script in the SQL editor.
