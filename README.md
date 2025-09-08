@@ -1,4 +1,3 @@
-
 <p>
   <picture>
     <!-- Dark mode -->
@@ -43,6 +42,8 @@ This repository provides a collection of SQL-based ontologies (intelligent seman
 - [Project Service Automation Model](./project_service_automation_model)
 - [Retail Operations Model](./retail_operations_model)
 - [Social Network Model](./social_network_model)
+- [Supply Chain Model](./supply_chain_model)
+- [Telecommunications Model](./telecommunications_model)
 - [TPC Benchmark Model](./tpc_benchmark_model)
 - [Utilities Management Model](./utilities_management_model)
 - [Vehicle Accidents Model](./vehicle_accidents_model)
