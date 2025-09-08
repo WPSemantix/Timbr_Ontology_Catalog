@@ -1,12 +1,13 @@
 
-<p align="center">
-  <!-- Light mode -->
-  <img src="https://timbr.ai/wp-content/uploads/2025/09/Untitled-design-2025-09-08T165921.947.png#gh-light-mode-only" 
-       alt="Timbr logo" width="220">
-
-  <!-- Dark mode -->
-  <img src="https://timbr.ai/wp-content/uploads/2025/09/timbr-for-black-background.png#gh-dark-mode-only" 
-       alt="Timbr logo" width="220">
+<p>
+  <picture>
+    <!-- Dark mode -->
+    <source media="(prefers-color-scheme: dark)" srcset="https://timbr.ai/wp-content/uploads/2025/09/timbr-for-black-background.png">
+    <!-- Light mode -->
+    <source media="(prefers-color-scheme: light)" srcset="https://timbr.ai/wp-content/uploads/2025/09/Untitled-design-2025-09-08T165921.947.png">
+    <!-- Fallback -->
+    <img alt="Timbr logo" src="https://timbr.ai/wp-content/uploads/2025/09/Untitled-design-2025-09-08T165921.947.png" width="220">
+  </picture>
 </p>
 
 # Timbr Ontology Catalog
