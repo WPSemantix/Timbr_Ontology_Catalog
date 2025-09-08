@@ -1,0 +1,50 @@
+CREATE OR REPLACE PROPERTY `city` string;
+CREATE OR REPLACE PROPERTY `device_type` string;
+CREATE OR REPLACE PROPERTY `call_duration` bigint;
+CREATE OR REPLACE PROPERTY `contract_date` string;
+CREATE OR REPLACE PROPERTY `first_name` string;
+CREATE OR REPLACE PROPERTY `person_id` bigint;
+CREATE OR REPLACE PROPERTY `device_id` bigint;
+CREATE OR REPLACE PROPERTY `last_name` string;
+CREATE OR REPLACE PROPERTY `technology` string;
+CREATE OR REPLACE PROPERTY `call_id` bigint;
+CREATE OR REPLACE PROPERTY `contract_type` string;
+CREATE OR REPLACE PROPERTY `driver_license_id` integer;
+CREATE OR REPLACE PROPERTY `company_name` string;
+CREATE OR REPLACE PROPERTY `started_at` timestamp;
+CREATE OR REPLACE PROPERTY `phone_number` string;
+CREATE OR REPLACE PROPERTY `callee_number` string;
+CREATE OR REPLACE PROPERTY `caller_number` string;
+CREATE OR REPLACE PROPERTY `age` bigint;
+CREATE OR REPLACE MEASURE `count_of_caller_number` bigint DESCRIPTION = 'The total number of unique Caller Number' AS SELECT COUNT(DISTINCT `caller_number`);
+CREATE OR REPLACE MEASURE `count_of_device_type` bigint DESCRIPTION = 'The total number of unique Device Type' AS SELECT COUNT(DISTINCT `device_type`);
+CREATE OR REPLACE MEASURE `earliest_started_at` timestamp DESCRIPTION = 'The earliest of Started At' AS SELECT MIN(`started_at`);
+CREATE OR REPLACE MEASURE `latest_started_at` timestamp DESCRIPTION = 'The latest of Started At' AS SELECT MAX(`started_at`);
+CREATE OR REPLACE MEASURE `total_call_duration` double DESCRIPTION = 'The total amount of Call Duration' AS SELECT SUM(`call_duration`);
+CREATE OR REPLACE MEASURE `count_of_technology` bigint DESCRIPTION = 'The total number of unique Technology' AS SELECT COUNT(DISTINCT `technology`);
+CREATE OR REPLACE MEASURE `average_age` double DESCRIPTION = 'The average Age value' AS SELECT AVG(`age`);
+CREATE OR REPLACE CONCEPT `person` (`phone_number` string, `age` bigint, `person_id` bigint, `last_name` string, `city` string, `first_name` string, `average_age` measure double, PRIMARY KEY (`person_id`), LABEL (`first_name`, `last_name`), CONSTRAINT `has_contract` FOREIGN KEY (`person_id`) REFERENCES `contract` (`person_id`) INVERSEOF `signed_by` ) INHERITS (`thing`) DESCRIPTION 'Information about an individual person: name, age, phone number and city' WITH TAGS (`icon` = 'fa-person');
+CREATE OR REPLACE CONCEPT `device` (`person_id` bigint, `call_id` bigint, `device_type` string, `device_id` bigint, `count_of_device_type` measure bigint, PRIMARY KEY (`device_id`), LABEL (`device_type`), CONSTRAINT `owned_by` FOREIGN KEY (`person_id`) REFERENCES `person` (`person_id`) INVERSEOF `has_device` ) INHERITS (`thing`) DESCRIPTION 'Information on the types of devices and the calls that were made from them.' WITH TAGS (`icon` = 'fa-computer');
+CREATE OR REPLACE CONCEPT `contract` (`contract_date` string, `phone_number` string, `person_id` bigint, `contract_type` string, `company_name` string, PRIMARY KEY (`person_id`), LABEL (`company_name`)) INHERITS (`thing`) DESCRIPTION 'A contract between a person and a company' WITH TAGS (`icon` = 'fa-file-contract');
+CREATE OR REPLACE CONCEPT `company` (`technology` string, `company_name` string, `count_of_technology` measure bigint, PRIMARY KEY (`company_name`), LABEL (`company_name`)) INHERITS (`thing`) DESCRIPTION 'Names of companies and their technologies ' WITH TAGS (`icon` = 'fa-building');
+CREATE OR REPLACE CONCEPT `call` (`callee_number` string, `call_duration` bigint, `call_id` bigint, `started_at` timestamp, `caller_number` string, `device_id` bigint, `latest_started_at` measure timestamp, `count_of_caller_number` measure bigint, `earliest_started_at` measure timestamp, `total_call_duration` measure double, PRIMARY KEY (`call_id`), LABEL (`call_id`), CONSTRAINT `callee` FOREIGN KEY (`callee_number`) REFERENCES `person` (`phone_number`) INVERSEOF `received_call` , CONSTRAINT `caller` FOREIGN KEY (`caller_number`) REFERENCES `person` (`phone_number`) INVERSEOF `made_call` , CONSTRAINT `called_using` FOREIGN KEY (`device_id`) REFERENCES `device` (`device_id`) INVERSEOF `used_to_call` ) INHERITS (`thing`) DESCRIPTION 'A call between two people as caller and callee, including call start time and call duration' WITH TAGS (`icon` = 'fa-phone-flip');
+CREATE OR REPLACE CONCEPT `minor`  INHERITS (`person`) DESCRIPTION 'Information about individual minors: name, age, phone number and city' FROM timbr.`person` WHERE `age` < 18;
+CREATE OR REPLACE CONCEPT `adult` (`driver_license_id` integer) INHERITS (`person`) DESCRIPTION 'Information about individual adults: name, age, phone number and city' FROM dtimbr.`person` WHERE `age` >= 18;
+CREATE OR REPLACE CONCEPT `adults_50_plus`  INHERITS (`adult`) FROM dtimbr.`adult` WHERE `age` >= 50;
+CREATE OR REPLACE CONCEPT `adults_35_to_50`  INHERITS (`adult`) FROM dtimbr.`adult` WHERE `age` > 35 AND `age` < 50;
+CREATE OR REPLACE CONCEPT `tablet`  INHERITS (`device`) DESCRIPTION 'Information on the calls that were made by people using Tablets' FROM timbr.`device` WHERE `device_type` = 'Tablet';
+CREATE OR REPLACE CONCEPT `smartwatch`  INHERITS (`device`) DESCRIPTION 'Information on the calls that were made by people using smartwatches' FROM timbr.`device` WHERE `device_type` = 'Smartwatch';
+CREATE OR REPLACE CONCEPT `smartphone`  INHERITS (`device`) DESCRIPTION 'Information on the calls that were made by people using smartphones' FROM timbr.`device` WHERE `device_type` = 'Smartphone';
+CREATE OR REPLACE CONCEPT `pc`  INHERITS (`device`) DESCRIPTION 'Information on the calls that were made by people using a PC' FROM timbr.`device` WHERE `device_type` = 'PC';
+CREATE OR REPLACE CONCEPT `eco_cell_company`  INHERITS (`company`) FROM timbr.`company` WHERE `company_name` = 'Eco Cell';
+CREATE OR REPLACE CONCEPT `breezcom_company`  INHERITS (`company`) FROM timbr.`company` WHERE `company_name` = 'Breezcom';
+CREATE OR REPLACE CONCEPT `beast_mobile_company`  INHERITS (`company`) FROM timbr.`company` WHERE `company_name` = 'Beast Mobile';
+CREATE OR REPLACE CONCEPT `alcatel_mobile_company`  INHERITS (`company`) FROM timbr.`company` WHERE `company_name` = 'Alcatel Mobile';
+CREATE OR REPLACE MAPPING `map_person_1` INTO (`person`) USING `mysql` WITHOUT PARSING AS SELECT `age` AS `age`, `city` AS `city`, `first_name` AS `first_name`, `last_name` AS `last_name`, `person_id` AS `person_id`, `phone_number` AS `phone_number`
+FROM `calls`.`people`;
+CREATE OR REPLACE MAPPING `map_call_1` INTO (`call`) USING `mysql` WITHOUT PARSING AS SELECT `callee_number` AS `callee_number`, `caller_number` AS `caller_number`, `call_duration` AS `call_duration`, `call_id` AS `call_id`, `device_id` AS `device_id`, CAST(`started_at` AS DATETIME) AS `started_at`
+FROM `calls`.`calls`;
+CREATE OR REPLACE MAPPING `map_device_1` INTO (`device`) USING `mysql` WITHOUT PARSING AS SELECT `call_id` AS `call_id`, `device_id` AS `device_id`, `device_type` AS `device_type`, `person_id` AS `person_id`
+FROM `calls`.`devices`;
+CREATE OR REPLACE MAPPING `map_company_1` INTO (`company`) USING `mysql` WITHOUT PARSING AS SELECT `company_name` AS `company_name`, `technology` AS `technology`
+FROM `calls`.`companies`;
